@@ -1,0 +1,127 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /* Brand palette */
+    --color-brand-50:  #eef8fd;
+    --color-brand-100: #d4eefb;
+    --color-brand-200: #addff6;
+    --color-brand-300: #74c8ef;
+    --color-brand-400: #27abe3; /* primary light */
+    --color-brand-500: #1f93cc;
+    --color-brand-600: #226b9f; /* primary dark */
+    --color-brand-700: #1e5a85;
+    --color-brand-800: #1d4c6e;
+    --color-brand-900: #1c405c;
+    --color-brand-950: #12293d;
+
+    /* Fonts */
+    --font-sans: 'IBM Plex Sans Arabic', 'Tajawal', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Animations */
+    --animate-fade-up: fade-up 0.7s ease-out both;
+    --animate-fade-in: fade-in 0.8s ease-out both;
+    --animate-float: float 6s ease-in-out infinite;
+    --animate-blob: blob 14s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-16px); }
+}
+@keyframes blob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(20px, -30px) scale(1.1); }
+    66%      { transform: translate(-15px, 15px) scale(0.95); }
+}
+
+/* ---- Base ---- */
+@layer base {
+    html { scroll-behavior: smooth; }
+    body {
+        @apply bg-white text-slate-700 antialiased;
+        font-feature-settings: 'kern';
+    }
+    ::selection { @apply bg-brand-400/25 text-brand-700; }
+}
+
+/* Base button — defined as a utility so it can be @applied below and used in HTML. */
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3
+           text-sm font-semibold transition-all duration-300 cursor-pointer
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2;
+}
+
+/* ---- Reusable utilities ---- */
+@layer components {
+    .container-x { @apply mx-auto w-full max-w-7xl px-5 sm:px-8; }
+
+    .btn-primary {
+        @apply btn bg-brand-600 text-white shadow-lg shadow-brand-600/25
+               hover:bg-brand-700 hover:shadow-brand-600/40 hover:-translate-y-0.5;
+    }
+    .btn-light {
+        @apply btn bg-white text-brand-600 shadow-lg shadow-black/5
+               hover:-translate-y-0.5 hover:shadow-xl;
+    }
+    .btn-outline {
+        @apply btn border border-brand-200 bg-white/60 text-brand-700
+               hover:border-brand-400 hover:bg-white hover:-translate-y-0.5;
+    }
+    .btn-ghost {
+        @apply btn text-slate-600 hover:text-brand-600 hover:bg-brand-50;
+    }
+
+    .gradient-brand { @apply bg-gradient-to-br from-brand-600 to-brand-400; }
+    .text-gradient {
+        @apply bg-gradient-to-l from-brand-600 to-brand-400 bg-clip-text text-transparent;
+    }
+
+    .card {
+        @apply rounded-2xl border border-slate-100 bg-white p-7 shadow-sm
+               transition-all duration-300;
+    }
+    .card-hover {
+        @apply hover:-translate-y-1.5 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-600/10;
+    }
+
+    .field-label { @apply mb-2 block text-sm font-semibold text-slate-700; }
+    .field-input {
+        @apply w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm
+               text-slate-800 placeholder:text-slate-400 transition
+               focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-400/30;
+    }
+    .badge-pill {
+        @apply inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-1.5
+               text-xs font-bold tracking-wide text-brand-600 uppercase;
+    }
+}
+
+/* Reveal-on-scroll (driven by a tiny IntersectionObserver in app.js) */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    will-change: opacity, transform;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+}
