@@ -2,18 +2,24 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
+     * The root path redirects to the default locale.
      */
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_root_redirects_to_default_locale(): void
     {
-        $response = $this->get('/');
+        $this->get('/')->assertRedirect('/ar');
+    }
 
-        $response->assertStatus(200);
+    /**
+     * The Arabic homepage renders successfully.
+     */
+    public function test_home_page_renders(): void
+    {
+        $this->get('/ar')->assertOk();
+        $this->get('/en')->assertOk();
     }
 }

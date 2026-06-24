@@ -38,6 +38,7 @@ A bilingual (Arabic/English) corporate website for **ITQAAN Information Technolo
 - PHP **8.2+**
 - Composer 2.x
 - Node.js 18+ و npm
+- MySQL / MariaDB (قاعدة باسم `itqaan`)
 
 ## 🚀 التشغيل محلياً / Local development
 
@@ -49,12 +50,18 @@ npm install
 cp .env.example .env   # عند الحاجة
 php artisan key:generate
 
+# قاعدة البيانات (أنشئ قاعدة MySQL باسم itqaan أولاً)
+php artisan migrate
+php artisan db:seed --class=AdminUserSeeder   # ينشئ حساب الأدمن
+
 # بناء الأصول
 npm run build          # أو: npm run dev (وضع المراقبة)
 
 # تشغيل الخادم
 php artisan serve
 ```
+
+ثم افتح لوحة التحكم على <http://localhost:8000/admin>.
 
 ثم افتح: <http://localhost:8000> (يحوّل تلقائياً إلى `/ar`).
 
@@ -92,6 +99,35 @@ MAIL_TO_ADDRESS="info@itqaanit.com"
 
 ---
 
+## 🔐 لوحة التحكم / Admin panel
+
+لوحة التحكم مبنية على **Filament** وتتوفر على المسار **`/admin`**.
+
+**إنشاء حساب الأدمن** (محلياً): القيم تؤخذ من `.env` (`ADMIN_EMAIL`, `ADMIN_PASSWORD`):
+
+```bash
+php artisan db:seed --class=AdminUserSeeder
+# أو إنشاء حساب يدوياً:
+php artisan make:filament-user
+```
+
+**ما تتيحه لوحة التحكم:**
+- 📊 لوحة معلومات بإحصائيات (طلبات جديدة، إجمالي الطلبات، رسائل غير مقروءة)
+- 🚀 **طلبات المشاريع**: عرض كامل لكل طلب، تغيير الحالة، ملاحظات داخلية، زر رد عبر واتساب، فلاتر
+- ✉️ **رسائل التواصل**: عرض الرسائل، تمييزها كمقروءة تلقائياً، زر رد عبر واتساب
+- ⚙️ **الإعدادات والتكاملات**: ربط تيليجرام (توكن + Chat ID) ورقم واتساب وبريد الإشعارات
+
+### التكاملات / Integrations
+
+| التكامل | الآلية |
+| --- | --- |
+| **تيليجرام** | إشعار فوري عبر Bot API عند كل طلب/رسالة جديدة. فعّله من صفحة الإعدادات وأدخل التوكن (من `@BotFather`) و Chat ID (من `@userinfobot`). جرّبه بزر «إرسال رسالة تجريبية». |
+| **واتساب** | روابط `wa.me` — زر عائم في الموقع للتواصل، وأزرار رد سريعة بجانب كل طلب/رسالة في لوحة التحكم. يضبط الرقم من صفحة الإعدادات. |
+
+> إعدادات التكاملات تُخزَّن في قاعدة البيانات (جدول `settings`) وتُدار من اللوحة — لا حاجة لتعديل `.env`.
+
+---
+
 ## ☁️ النشر على Laravel Forge / Deploying to Laravel Forge
 
 1. اربط المستودع من GitHub بموقعك على Forge (`itqaanit.com`).
@@ -106,7 +142,8 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 npm ci
 npm run build
 
-php artisan migrate --force   # لا توجد جداول حالياً، آمن
+php artisan migrate --force
+php artisan db:seed --class=AdminUserSeeder --force   # أول مرة فقط
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -115,11 +152,14 @@ php artisan view:cache
 3. في بيئة الإنتاج اضبط `.env`:
    - `APP_ENV=production` و `APP_DEBUG=false`
    - `APP_URL=https://itqaanit.com`
+   - بيانات قاعدة بيانات MySQL (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`)
+   - `ADMIN_EMAIL` و `ADMIN_PASSWORD` قبل أول تشغيل للـ seeder
    - إعدادات SMTP أعلاه
 4. فعّل شهادة SSL من Forge (Let's Encrypt).
+5. بعد النشر، ادخل `/admin` واضبط التكاملات (تيليجرام/واتساب) من صفحة الإعدادات.
 
-> الجلسات/الكاش/الطابور على `file`/`sync` — لا حاجة لقاعدة بيانات. إن رغبت لاحقاً
-> بتخزين الطلبات في قاعدة بيانات، أضف migration و model.
+> قاعدة البيانات MySQL مطلوبة (تخزّن الطلبات والرسائل وإعدادات التكاملات).
+> الجلسات/الكاش على `file` والطابور `sync`.
 
 ## 🧱 البنية / Project structure
 

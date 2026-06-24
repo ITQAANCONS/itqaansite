@@ -40,4 +40,40 @@ class Site
     {
         return config('site.contact', []);
     }
+
+    /* ---- Localized option maps (slug => label) for the admin panel ---- */
+
+    public static function projectTypeOptions(): array
+    {
+        return collect(config('site.request_options.project_types', []))
+            ->map(fn ($v) => self::t($v))->all();
+    }
+
+    public static function budgetOptions(): array
+    {
+        return collect(config('site.request_options.budgets', []))
+            ->map(fn ($v) => self::t($v))->all();
+    }
+
+    public static function timelineOptions(): array
+    {
+        return collect(config('site.request_options.timelines', []))
+            ->map(fn ($v) => self::t($v))->all();
+    }
+
+    public static function serviceOptions(): array
+    {
+        return collect(self::services())
+            ->mapWithKeys(fn ($s) => [$s['slug'] => self::t($s['title'])])->all();
+    }
+
+    public static function statusOptions(): array
+    {
+        return [
+            'new'       => 'جديد',
+            'in_review' => 'قيد المراجعة',
+            'contacted' => 'تم التواصل',
+            'closed'    => 'مغلق',
+        ];
+    }
 }
