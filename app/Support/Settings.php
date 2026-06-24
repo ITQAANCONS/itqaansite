@@ -38,4 +38,52 @@ class Settings
     {
         return self::get('notification_email', config('site.contact.email'));
     }
+
+    /** Path (relative to the public disk) of an uploaded logo, if any. */
+    public static function logo(string $variant = 'default'): ?string
+    {
+        $key = $variant === 'white' ? 'site_logo_white' : 'site_logo';
+        $path = self::get($key);
+        return $path ? \Illuminate\Support\Facades\Storage::disk('public')->url($path) : null;
+    }
+
+    /**
+     * Override Laravel's mail config from DB settings, so SMTP can be
+     * managed from the admin panel instead of .env. Applied on boot.
+     */
+    public static function applyMailConfig(): void
+    {
+        if (! Schema::hasTable('settings')) {
+            return;
+        }
+
+        $host = self::get('mail_host');
+        if (! $host) {
+            return; // fall back to .env config
+        }
+
+        $encryption = self::get('mail_encryption'); // tls | ssl | ''
+        $scheme = match ($encryption) {
+            'ssl'   => 'smtps',
+            'tls'   => 'smtp',
+            default => null,
+        };
+
+        config([
+            'mail.default' => 'smtp',
+            'mail.mailers.smtp.host' => $host,
+            'mail.mailers.smtp.port' => (int) self::get('mail_port', 587),
+            'mail.mailers.smtp.username' => self::get('mail_username'),
+            'mail.mailers.smtp.password' => self::get('mail_password'),
+            'mail.mailers.smtp.encryption' => $encryption ?: null,
+            'mail.mailers.smtp.scheme' => $scheme,
+        ]);
+
+        if ($from = self::get('mail_from_address')) {
+            config(['mail.from.address' => $from]);
+        }
+        if ($fromName = self::get('mail_from_name')) {
+            config(['mail.from.name' => $fromName]);
+        }
+    }
 }

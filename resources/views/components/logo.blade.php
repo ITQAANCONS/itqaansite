@@ -9,8 +9,16 @@
     $wordColor = $white ? '#ffffff' : '#226b9f';
     $subColor  = $white ? 'rgba(255,255,255,.75)' : '#27abe3';
     $uid = 'lg' . substr(md5($variant . ($markOnly ? '1' : '0')), 0, 6);
+
+    // Admin-uploaded logo overrides the built-in SVG (falls back to the
+    // colored logo if a white version was not uploaded).
+    $uploaded = \App\Support\Settings::logo($variant) ?? ($white ? \App\Support\Settings::logo('default') : null);
 @endphp
 
+@if ($uploaded)
+    <img src="{{ $uploaded }}" alt="ITQAAN"
+         {{ $attributes->merge(['class' => 'w-auto object-contain ' . $class]) }}>
+@else
 <span {{ $attributes->merge(['class' => 'inline-flex items-center gap-2.5 ' . $class]) }} aria-label="ITQAAN">
     {{-- Q mark --}}
     <svg viewBox="0 0 64 64" class="h-full w-auto shrink-0" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -31,3 +39,4 @@
         </span>
     @endunless
 </span>
+@endif

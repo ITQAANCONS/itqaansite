@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Support\Settings;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
         // locale-prefixed route group (e.g. error pages). The SetLocale
         // middleware overrides this per request.
         URL::defaults(['locale' => app()->getLocale()]);
+
+        // Apply admin-managed SMTP settings over the .env defaults.
+        Settings::applyMailConfig();
     }
 }
