@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Support\Site;
 
 class PageController extends Controller
@@ -10,7 +11,7 @@ class PageController extends Controller
     {
         return view('pages.home', [
             'services' => array_slice(Site::services(), 0, 6),
-            'projects' => array_slice(Site::projects(), 0, 3),
+            'projects' => Project::published()->ordered()->where('is_featured', true)->take(3)->get(),
             'stats'    => config('site.stats', []),
             'process'  => config('site.process', []),
         ]);
@@ -26,19 +27,19 @@ class PageController extends Controller
     public function portfolio()
     {
         return view('pages.portfolio', [
-            'projects' => Site::projects(),
+            'projects' => Project::published()->ordered()->get(),
         ]);
     }
 
     public function project(string $locale, string $slug)
     {
-        $project = Site::project($slug);
+        $project = Project::published()->where('slug', $slug)->first();
         abort_if(! $project, 404);
 
-        $others = collect(Site::projects())
+        $others = Project::published()->ordered()
             ->where('slug', '!=', $slug)
             ->take(3)
-            ->all();
+            ->get();
 
         return view('pages.project', compact('project', 'others'));
     }

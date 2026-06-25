@@ -1,10 +1,10 @@
 @php
     use App\Support\Site;
-    $title = Site::t($project['title']);
-    $category = Site::t($project['category']);
-    $excerpt = Site::t($project['excerpt']);
-    $description = Site::t($project['description']);
-    $hasUrl = !empty($project['url']) && $project['url'] !== '#';
+    $title = $project->title;
+    $category = $project->category;
+    $excerpt = $project->excerpt;
+    $description = $project->description;
+    $hasUrl = ! empty($project->url);
 @endphp
 
 <x-layouts.app :title="$title" :description="$excerpt">
@@ -27,7 +27,7 @@
                     <p class="mt-3 max-w-2xl text-lg text-slate-500">{{ $excerpt }}</p>
                 </div>
                 @if ($hasUrl)
-                    <a href="{{ $project['url'] }}" target="_blank" rel="noopener" class="btn-primary">
+                    <a href="{{ $project->url }}" target="_blank" rel="noopener" class="btn-primary">
                         <x-icon name="globe" class="h-5 w-5" />
                         {{ __('site.view_project') }}
                     </a>
@@ -42,9 +42,13 @@
             {{-- Main --}}
             <div class="reveal lg:col-span-2">
                 <div class="overflow-hidden rounded-3xl border border-slate-100 bg-gradient-to-br from-brand-50 to-brand-100 shadow-sm">
-                    <img src="{{ asset($project['image']) }}" alt="{{ $title }}"
-                         class="aspect-[16/10] w-full object-cover" loading="lazy"
-                         onerror="this.closest('div').style.minHeight='320px'">
+                    @if ($project->image_url)
+                        <img src="{{ $project->image_url }}" alt="{{ $title }}"
+                             class="aspect-[16/10] w-full object-cover" loading="lazy"
+                             onerror="this.closest('div').style.minHeight='320px'">
+                    @else
+                        <div class="aspect-[16/10] w-full"></div>
+                    @endif
                 </div>
 
                 <h2 class="mt-10 text-2xl font-extrabold text-slate-900">{{ __('site.portfolio_page.about_project') }}</h2>
@@ -58,7 +62,7 @@
                     <dl class="mt-5 space-y-4 text-sm">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                             <dt class="font-semibold text-slate-500">{{ __('site.portfolio_page.client') }}</dt>
-                            <dd class="font-bold text-slate-800">{{ Site::t($project['client']) }}</dd>
+                            <dd class="font-bold text-slate-800">{{ $project->client }}</dd>
                         </div>
                         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                             <dt class="font-semibold text-slate-500">{{ __('site.portfolio_page.category') }}</dt>
@@ -66,20 +70,20 @@
                         </div>
                         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                             <dt class="font-semibold text-slate-500">{{ __('site.portfolio_page.year') }}</dt>
-                            <dd class="font-bold text-slate-800">{{ $project['year'] }}</dd>
+                            <dd class="font-bold text-slate-800">{{ $project->year }}</dd>
                         </div>
                         @if ($hasUrl)
                             <div class="flex items-center justify-between">
                                 <dt class="font-semibold text-slate-500">{{ __('site.portfolio_page.website') }}</dt>
-                                <dd><a href="{{ $project['url'] }}" target="_blank" rel="noopener" class="font-bold text-brand-600 hover:underline" dir="ltr">{{ preg_replace('#^https?://#', '', $project['url']) }}</a></dd>
+                                <dd><a href="{{ $project->url }}" target="_blank" rel="noopener" class="font-bold text-brand-600 hover:underline" dir="ltr">{{ preg_replace('#^https?://#', '', $project->url) }}</a></dd>
                             </div>
                         @endif
                     </dl>
 
-                    @if (!empty($project['services']))
+                    @if (! empty($project->services))
                         <h4 class="mt-7 mb-3 text-sm font-bold text-slate-900">{{ __('site.portfolio_page.services_used') }}</h4>
                         <div class="flex flex-wrap gap-2">
-                            @foreach ($project['services'] as $slug)
+                            @foreach ($project->services as $slug)
                                 @php $svc = Site::service($slug); @endphp
                                 @if ($svc)
                                     <a href="{{ route('services') }}#{{ $slug }}" class="rounded-full bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-600 transition hover:bg-brand-100">
