@@ -9,17 +9,15 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
-    /** Who may access the admin panel. Tighten this later if needed. */
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return true;
-    }
+    public const TYPE_STAFF = 'staff';
+    public const TYPE_CLIENT = 'client';
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +27,10 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'name',
         'email',
+        'type',
+        'phone',
+        'company',
+        'is_active',
         'password',
     ];
 
@@ -52,6 +54,33 @@ class User extends Authenticatable implements FilamentUser
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Panel access: staff use /admin, clients use /portal.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        if (! $this->is_active) {
+            return false;
+        }
+
+        return match ($panel->getId()) {
+            'admin'  => $this->type === self::TYPE_STAFF,
+            'portal' => $this->type === self::TYPE_CLIENT,
+            default  => false,
+        };
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->type === self::TYPE_STAFF;
+    }
+
+    public function isClient(): bool
+    {
+        return $this->type === self::TYPE_CLIENT;
     }
 }

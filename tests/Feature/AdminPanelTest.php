@@ -14,10 +14,21 @@ class AdminPanelTest extends TestCase
 
     private function admin(): User
     {
-        return User::firstOrCreate(
+        // Generate the panel's permissions (as in production), then grant them all.
+        \Illuminate\Support\Facades\Artisan::call('shield:generate', [
+            '--all' => true, '--option' => 'permissions', '--panel' => 'admin', '--no-interaction' => true,
+        ]);
+
+        $role = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'super_admin']);
+        $role->syncPermissions(\Spatie\Permission\Models\Permission::all());
+
+        $user = User::firstOrCreate(
             ['email' => 'pest-admin@example.com'],
-            ['name' => 'Pest Admin', 'password' => bcrypt('password')],
+            ['name' => 'Pest Admin', 'password' => bcrypt('password'), 'type' => User::TYPE_STAFF, 'is_active' => true],
         );
+        $user->assignRole('super_admin');
+
+        return $user;
     }
 
     public function test_admin_pages_render(): void
