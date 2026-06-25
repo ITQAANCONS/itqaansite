@@ -4,86 +4,86 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex">
-    <title>تحت الصيانة — إتقان لتقنية المعلومات</title>
+    <title>الموقع تحت الصيانة — إتقان لتقنية المعلومات</title>
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        :root{ --bg:#0a141d; --ink:#eaf1f6; --muted:#8194a3; --line:rgba(255,255,255,.10);
-               --b1:#226b9f; --b2:#27abe3; }
-        *{ margin:0; padding:0; box-sizing:border-box; }
-        html,body{ height:100%; }
-        body{
-            font-family:'IBM Plex Sans Arabic', system-ui, sans-serif;
-            background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased;
-            background-image:
-                linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-            background-size:46px 46px;
+        :root { --brand-600:#226b9f; --brand-400:#27abe3; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            min-height:100vh; display:flex; align-items:center; justify-content:center;
+            font-family:'Tajawal', system-ui, sans-serif; color:#1c405c;
+            background:#f5fbfe; position:relative; overflow:hidden; padding:24px;
         }
-        .mono{ font-family:'IBM Plex Mono', monospace; }
-        .sheet{ position:relative; min-height:100vh; max-width:1180px; margin:0 auto;
-            padding:36px clamp(22px,5.5vw,68px); display:flex; flex-direction:column; overflow:hidden; }
-        .glow{ position:absolute; inset-block-start:-26%; inset-inline-start:-14%;
-            width:min(60vw,640px); aspect-ratio:1; border-radius:50%; z-index:0; pointer-events:none;
-            background:radial-gradient(circle, rgba(39,171,227,.16), transparent 62%); }
-        .row{ position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:18px; }
-        .row.head{ padding-bottom:20px; border-bottom:1px solid var(--line); }
-        .brand{ display:inline-flex; align-items:center; gap:11px; }
-        .brand svg{ height:30px; width:auto; color:var(--b2); }
-        .brand b{ font-weight:700; font-size:21px; letter-spacing:.5px; color:#fff; }
-        .status{ display:inline-flex; align-items:center; gap:9px; font-size:12.5px; color:var(--muted); letter-spacing:1px; }
-        .status .dot{ width:7px; height:7px; border-radius:50%; background:var(--b2); }
-        main{ position:relative; z-index:1; flex:1; display:flex; flex-direction:column; justify-content:center; padding:60px 0; }
-        .kicker{ font-size:13.5px; color:var(--b2); letter-spacing:2px; margin-bottom:26px; }
-        h1{ font-weight:700; font-size:clamp(46px,12vw,128px); line-height:1; letter-spacing:-1.5px; margin-bottom:30px; }
-        h1 em{ font-style:normal; color:var(--b2); }
-        .lead{ font-size:clamp(16px,2vw,19px); font-weight:300; line-height:2; color:#aab8c4; max-width:44ch; }
-        .track{ margin-top:42px; width:min(280px,70%); height:3px; background:rgba(255,255,255,.08);
-            border-radius:99px; overflow:hidden; }
-        .track i{ display:block; height:100%; width:42%; border-radius:99px;
-            background:linear-gradient(90deg,var(--b1),var(--b2)); animation:slide 1.9s ease-in-out infinite; }
-        .row.foot{ padding-top:20px; border-top:1px solid var(--line); margin-top:auto;
-            font-size:13px; color:var(--muted); letter-spacing:.3px; flex-wrap:wrap; }
-        .foot a{ color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; transition:.2s; }
-        .foot a:hover{ color:var(--b2); border-color:var(--b2); }
-        .reveal{ opacity:0; transform:translateY(16px); animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
-        .d1{ animation-delay:.05s } .d2{ animation-delay:.15s } .d3{ animation-delay:.28s } .d4{ animation-delay:.4s }
-        @keyframes rise{ to{ opacity:1; transform:none } }
-        @keyframes slide{ 0%{transform:translateX(120%)} 100%{transform:translateX(-320%)} }
-        @media (max-width:560px){ .status .label{ display:none } main{ padding:40px 0 } h1{ letter-spacing:-.5px } }
-        @media (prefers-reduced-motion:reduce){ .reveal{ animation:none; opacity:1; transform:none } .track i,.status .dot{ animation:none } }
+        .blob { position:absolute; border-radius:50%; filter:blur(80px); opacity:.32; z-index:0; }
+        .blob-1 { width:420px; height:420px; background:#74c8ef; top:-120px; inset-inline-end:-80px; }
+        .blob-2 { width:360px; height:360px; background:#addff6; bottom:-120px; inset-inline-start:-80px; }
+        .dots {
+            position:absolute; inset:0; z-index:0; opacity:.05;
+            background-image:radial-gradient(#226b9f 1.5px, transparent 1.5px); background-size:30px 30px;
+        }
+        .card {
+            position:relative; z-index:1; width:100%; max-width:560px; text-align:center;
+            background:rgba(255,255,255,.78); backdrop-filter:blur(12px);
+            border:1px solid rgba(39,171,227,.18); border-radius:28px;
+            padding:56px 40px; box-shadow:0 30px 60px -20px rgba(34,107,159,.25);
+            animation:enter .8s cubic-bezier(.2,.7,.2,1) both;
+        }
+        .logo { display:inline-flex; align-items:center; gap:12px; margin-bottom:8px; }
+        .logo svg { height:56px; width:auto; animation:float 5s ease-in-out infinite; }
+        .logo .word { display:flex; flex-direction:column; line-height:1; align-items:flex-start; }
+        .logo .word b { font-size:34px; font-weight:800; letter-spacing:-1px;
+            background:linear-gradient(to left,var(--brand-600),var(--brand-400));
+            -webkit-background-clip:text; background-clip:text; color:transparent; }
+        .logo .word span { font-size:11px; font-weight:600; letter-spacing:3px; color:var(--brand-400); text-transform:uppercase; margin-top:3px; }
+        .badge {
+            display:inline-flex; align-items:center; gap:9px; margin:30px 0 20px;
+            background:#eef8fd; color:var(--brand-600); font-weight:700; font-size:13px;
+            padding:9px 20px; border-radius:999px;
+        }
+        .badge .pulse { width:8px; height:8px; border-radius:50%; background:var(--brand-400); position:relative; }
+        .badge .pulse::after { content:''; position:absolute; inset:0; border-radius:50%; background:var(--brand-400); animation:ping 2s cubic-bezier(0,0,.2,1) infinite; }
+        h1 { font-size:30px; font-weight:800; color:#1c405c; margin-bottom:14px; line-height:1.45; }
+        p { font-size:17px; line-height:1.95; color:#5b7185; max-width:430px; margin:0 auto; }
+        .footer { margin-top:34px; padding-top:24px; border-top:1px solid rgba(34,107,159,.1); font-size:14px; color:#7a8ca0; }
+        .footer a { color:var(--brand-600); font-weight:700; text-decoration:none; }
+        .footer a:hover { text-decoration:underline; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+        @keyframes ping { 75%,100%{transform:scale(2.4); opacity:0} }
+        @keyframes enter { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
+        @media (max-width:480px){ .card{padding:42px 24px} h1{font-size:24px} p{font-size:15px} .logo svg{height:46px} .logo .word b{font-size:28px} }
+        @media (prefers-reduced-motion:reduce){ .card,.logo svg,.badge .pulse::after{animation:none} }
     </style>
 </head>
 <body>
-    <div class="sheet">
-        <div class="glow"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="dots"></div>
 
-        <header class="row head reveal d1">
-            <span class="brand">
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path fill="currentColor" d="M30 2C14.5 2 2 14.5 2 30s12.5 28 28 28c5.2 0 10-1.4 14.2-3.9l8 8a5 5 0 0 0 7.1-7.1l-7.6-7.6A27.9 27.9 0 0 0 58 30C58 14.5 45.5 2 30 2Zm0 16a12 12 0 1 1 0 24 12 12 0 0 1 0-24Z"/>
-                </svg>
-                <b>ITQAAN</b>
-            </span>
-            <span class="status"><span class="dot"></span><span class="label mono">MAINTENANCE · 503</span></span>
-        </header>
+    <main class="card">
+        <div class="logo">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="qg" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#226b9f"/>
+                        <stop offset="1" stop-color="#27abe3"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#qg)" d="M30 2C14.5 2 2 14.5 2 30s12.5 28 28 28c5.2 0 10-1.4 14.2-3.9l8 8a5 5 0 0 0 7.1-7.1l-7.6-7.6A27.9 27.9 0 0 0 58 30C58 14.5 45.5 2 30 2Zm0 16a12 12 0 1 1 0 24 12 12 0 0 1 0-24Z"/>
+            </svg>
+            <span class="word"><b>ITQAAN</b><span>Information Technology</span></span>
+        </div>
 
-        <main>
-            <p class="kicker mono reveal d2">// نُحدّث المنصّة</p>
-            <h1 class="reveal d2">تحت <em>الصيانة</em></h1>
-            <p class="lead reveal d3">
-                نُجري تحديثاتٍ جوهرية على الموقع لنعود بتجربةٍ أحدث وأسرع.
-                نشكر لكم صبركم — لن يطول الانتظار.
-            </p>
-            <div class="track reveal d4"><i></i></div>
-        </main>
+        <div class="badge"><span class="pulse"></span> جارٍ التطوير</div>
 
-        <footer class="row foot reveal d4">
-            <span>للتواصل: <a href="mailto:info@itqaanit.com">info@itqaanit.com</a></span>
-            <span class="mono">© ٢٠٢٦ ITQAAN</span>
-        </footer>
-    </div>
+        <h1>الموقع مغلق مؤقتاً للصيانة</h1>
+        <p>نُجري حالياً بعض التحديثات والتحسينات لنقدّم لكم تجربةً أفضل. سنعود قريباً بإذن الله — شكراً لتفهّمكم.</p>
+
+        <div class="footer">
+            لأي استفسار عاجل: <a href="mailto:info@itqaanit.com">info@itqaanit.com</a>
+        </div>
+    </main>
 </body>
 </html>
