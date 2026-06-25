@@ -39,6 +39,11 @@ class Settings
         return self::get('notification_email', config('site.contact.email'));
     }
 
+    public static function anthropicKey(): ?string
+    {
+        return self::get('anthropic_api_key') ?: env('ANTHROPIC_API_KEY');
+    }
+
     /** Path (relative to the public disk) of an uploaded logo, if any. */
     public static function logo(string $variant = 'default'): ?string
     {

@@ -58,6 +58,8 @@ class ManageIntegrations extends Page
 
             'site_logo'          => Setting::get('site_logo'),
             'site_logo_white'    => Setting::get('site_logo_white'),
+
+            'anthropic_api_key'  => Setting::get('anthropic_api_key'),
         ]);
     }
 
@@ -108,6 +110,16 @@ class ManageIntegrations extends Page
                         TextInput::make('mail_from_name')->label('اسم المرسِل')->placeholder('إتقان'),
                     ])->columns(2),
 
+                Section::make('الذكاء الاصطناعي')
+                    ->description('مفتاح Anthropic (Claude) المستخدم لتوليد بيانات المشاريع تلقائياً.')
+                    ->icon('heroicon-o-sparkles')
+                    ->schema([
+                        TextInput::make('anthropic_api_key')
+                            ->label('مفتاح Anthropic API')
+                            ->helperText('احصل عليه من console.anthropic.com. يبدأ بـ sk-ant-')
+                            ->password()->revealable(),
+                    ]),
+
                 Section::make('الشعار والهوية')
                     ->description('استبدل شعار الموقع. اترك الحقل فارغاً لاستخدام الشعار الافتراضي المدمج.')
                     ->icon('heroicon-o-photo')
@@ -151,6 +163,8 @@ class ManageIntegrations extends Page
 
             'site_logo'          => $data['site_logo'] ?? '',
             'site_logo_white'    => $data['site_logo_white'] ?? '',
+
+            'anthropic_api_key'  => $data['anthropic_api_key'] ?? '',
         ]);
 
         Notification::make()->title('تم حفظ الإعدادات بنجاح')->success()->send();
