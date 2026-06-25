@@ -30,6 +30,17 @@ class ProjectRequestController extends Controller
 
         $projectRequest = ProjectRequest::create($data);
 
+        // Capture it as a lead in the CRM pipeline.
+        \App\Models\Lead::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'] ?? null,
+            'company' => $data['company'] ?? null,
+            'source' => 'website_request',
+            'stage' => 'new',
+            'project_request_id' => $projectRequest->id,
+        ]);
+
         try {
             Mail::to(Settings::notificationEmail())->send(new ProjectRequestMail($data));
         } catch (\Throwable $e) {

@@ -52,6 +52,7 @@ class AdminPanelTest extends TestCase
             '/admin/projects',
             '/admin/blog-posts',
             '/admin/tickets',
+            '/admin/leads',
             '/admin/manage-pages',
             '/admin/manage-integrations',
         ];
