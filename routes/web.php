@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProjectRequestController;
@@ -18,6 +19,9 @@ Route::prefix('{locale}')
 
         Route::get('/portfolio', [PageController::class, 'portfolio'])->name('portfolio');
         Route::get('/portfolio/{slug}', [PageController::class, 'project'])->name('project');
+
+        Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+        Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('post');
 
         Route::get('/contact', [PageController::class, 'contact'])->name('contact');
         Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

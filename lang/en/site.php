@@ -141,6 +141,19 @@ return [
         'not_specified' => 'Not specified',
     ],
 
+    'blog_page' => [
+        'title'       => 'Blog',
+        'subtitle'    => 'Technical articles and insights from the ITQAAN team on building digital products.',
+        'read_more'   => 'Read article',
+        'reading_time'=> 'min read',
+        'published_on'=> 'Published on',
+        'by'          => 'By',
+        'back'        => 'All articles',
+        'related'     => 'Related articles',
+        'empty'       => 'No published articles yet.',
+        'share'       => 'Share',
+    ],
+
     'footer' => [
         'about'        => 'A Saudi company specialized in building integrated digital solutions — websites, apps, systems, and visual identities.',
         'quick_links'  => 'Quick links',

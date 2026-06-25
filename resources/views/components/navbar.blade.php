@@ -9,6 +9,7 @@
     $links = [
         ['route' => 'home',      'label' => __('site.nav.home')],
         ['route' => 'portfolio', 'label' => __('site.nav.portfolio')],
+        ['route' => 'blog',      'label' => __('site.nav.blog')],
         ['route' => 'contact',   'label' => __('site.nav.contact')],
     ];
 @endphp
@@ -125,6 +126,7 @@
             </details>
 
             <a href="{{ route('portfolio') }}" class="rounded-lg px-4 py-3 text-base font-semibold {{ request()->routeIs('portfolio') ? 'bg-brand-50 text-brand-600' : 'text-slate-700 hover:bg-slate-50' }}">{{ __('site.nav.portfolio') }}</a>
+            <a href="{{ route('blog') }}" class="rounded-lg px-4 py-3 text-base font-semibold {{ request()->routeIs('blog') || request()->routeIs('post') ? 'bg-brand-50 text-brand-600' : 'text-slate-700 hover:bg-slate-50' }}">{{ __('site.nav.blog') }}</a>
             <a href="{{ route('contact') }}" class="rounded-lg px-4 py-3 text-base font-semibold {{ request()->routeIs('contact') ? 'bg-brand-50 text-brand-600' : 'text-slate-700 hover:bg-slate-50' }}">{{ __('site.nav.contact') }}</a>
 
             <a href="{{ route('request') }}" class="btn-primary mt-2 w-full">{{ __('site.nav.request') }}</a>
