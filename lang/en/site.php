@@ -3,11 +3,14 @@
 return [
 
     'nav' => [
-        'home'      => 'Home',
-        'services'  => 'Services',
-        'portfolio' => 'Portfolio',
-        'contact'   => 'Contact',
-        'request'   => 'Start a Project',
+        'home'         => 'Home',
+        'services'     => 'Solutions',
+        'portfolio'    => 'Projects',
+        'blog'         => 'Blog',
+        'contact'      => 'Contact',
+        'request'      => 'Start a Project',
+        'solutions_all'    => 'All solutions',
+        'solutions_intro'  => 'Integrated technology solutions covering every need of your digital project.',
     ],
 
     'read_more'    => 'Read more',

@@ -1,4 +1,4 @@
-@php use App\Support\Site; @endphp
+@php use App\Support\Site; use App\Support\Content; @endphp
 
 <x-layouts.app>
     {{-- ============ HERO ============ --}}
@@ -12,14 +12,14 @@
             <div class="text-center lg:text-start">
                 <span class="badge-pill animate-fade-in">
                     <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
-                    {{ __('site.hero.badge') }}
+                    {{ Content::get('home_hero_badge', __('site.hero.badge')) }}
                 </span>
                 <h1 class="mt-6 text-4xl font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl animate-fade-up">
-                    {{ __('site.hero.title') }}
-                    <span class="text-gradient">{{ __('site.hero.title_highlight') }}</span>
+                    {{ Content::get('home_hero_title', __('site.hero.title')) }}
+                    <span class="text-gradient">{{ Content::get('home_hero_highlight', __('site.hero.title_highlight')) }}</span>
                 </h1>
                 <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-500 lg:mx-0 mx-auto animate-fade-up" style="animation-delay:.1s">
-                    {{ __('site.hero.subtitle') }}
+                    {{ Content::get('home_hero_subtitle', __('site.hero.subtitle')) }}
                 </p>
                 <div class="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start justify-center animate-fade-up" style="animation-delay:.2s">
                     <a href="{{ route('request') }}" class="btn-primary w-full sm:w-auto">
@@ -100,8 +100,8 @@
 
             <div class="reveal">
                 <span class="badge-pill"><span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>{{ __('site.about.badge') }}</span>
-                <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">{{ __('site.about.title') }}</h2>
-                <p class="mt-5 text-base leading-relaxed text-slate-500">{{ __('site.about.body') }}</p>
+                <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">{{ Content::get('home_about_title', __('site.about.title')) }}</h2>
+                <p class="mt-5 text-base leading-relaxed text-slate-500">{{ Content::get('home_about_body', __('site.about.body')) }}</p>
                 <div class="mt-7 grid gap-3 sm:grid-cols-2">
                     @foreach ([__('site.about.point_1'), __('site.about.point_2'), __('site.about.point_3'), __('site.about.point_4')] as $point)
                         <div class="flex items-center gap-3">

@@ -4,11 +4,14 @@ return [
 
     // Navigation
     'nav' => [
-        'home'      => 'الرئيسية',
-        'services'  => 'الخدمات',
-        'portfolio' => 'أعمالنا',
-        'contact'   => 'تواصل معنا',
-        'request'   => 'اطلب مشروعك',
+        'home'         => 'الرئيسية',
+        'services'     => 'الحلول',
+        'portfolio'    => 'المشاريع',
+        'blog'         => 'المدونة',
+        'contact'      => 'تواصل معنا',
+        'request'      => 'اطلب مشروعك',
+        'solutions_all'    => 'كل الحلول',
+        'solutions_intro'  => 'حلول تقنية متكاملة تغطي كل احتياجات مشروعك الرقمي.',
     ],
 
     // Generic

@@ -6,14 +6,14 @@
 
             <div class="relative mx-auto max-w-2xl">
                 <h2 class="text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
-                    {{ __('site.cta_section.title') }}
+                    {{ \App\Support\Content::get('home_cta_title', __('site.cta_section.title')) }}
                 </h2>
                 <p class="mt-4 text-lg leading-relaxed text-brand-50">
-                    {{ __('site.cta_section.subtitle') }}
+                    {{ \App\Support\Content::get('home_cta_subtitle', __('site.cta_section.subtitle')) }}
                 </p>
                 <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                     <a href="{{ route('request') }}" class="btn-light w-full sm:w-auto">
-                        {{ __('site.cta_section.button') }}
+                        {{ \App\Support\Content::get('home_cta_button', __('site.cta_section.button')) }}
                         <x-icon name="arrow" class="h-5 w-5 {{ app()->getLocale() === 'ar' ? 'rotate-180' : '' }}" />
                     </a>
                     <a href="{{ route('contact') }}" class="btn w-full border border-white/40 text-white hover:bg-white/10 sm:w-auto">
