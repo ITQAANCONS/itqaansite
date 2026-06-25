@@ -64,6 +64,16 @@ class TelegramNotifier
         $this->send($text);
     }
 
+    public function notifyTicket(\App\Models\Ticket $t, string $body = ''): void
+    {
+        $text = "🎫 <b>تذكرة دعم جديدة</b>\n\n"
+            . "👤 <b>العميل:</b> " . e($t->user?->name ?? '') . "\n"
+            . "🏷 <b>الموضوع:</b> " . e($t->subject) . "\n"
+            . ($body ? "\n📝 " . e(mb_strimwidth($body, 0, 500, '…')) : '');
+
+        $this->send($text);
+    }
+
     public function notifyContactMessage(ContactMessage $m): void
     {
         $text = "✉️ <b>رسالة تواصل جديدة</b>\n\n"

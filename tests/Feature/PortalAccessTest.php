@@ -26,6 +26,8 @@ class PortalAccessTest extends TestCase
         $client = $this->user(User::TYPE_CLIENT);
 
         $this->actingAs($client)->get('/portal')->assertOk();
+        $this->actingAs($client)->get('/portal/tickets')->assertOk();
+        $this->actingAs($client)->get('/portal/tickets/create')->assertOk();
         // Staff-only admin panel must reject clients.
         $this->actingAs($client)->get('/admin')->assertStatus(403);
     }
