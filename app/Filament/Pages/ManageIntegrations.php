@@ -31,6 +31,8 @@ class ManageIntegrations extends Page
 
     protected static ?string $title = 'الإعدادات والتكاملات';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'الإعدادات';
+
     protected static ?int $navigationSort = 9;
 
     /** @var array<string, mixed> */
